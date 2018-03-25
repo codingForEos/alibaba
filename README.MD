@@ -23,7 +23,7 @@ var oDiv = document.getElementById('slider');
 var slider = new Slider(document.getElementById('slider'), imgs,4);
 slider.init();
 ```
--Slider构造函数参数
+- Slider构造函数参数
     - 第一个参数是一个空dom节点，最好是个div，轮播图的装载点。
     - 第二个参数是一组图片的url,注意，务必保持图片的尺寸和宽高比是一致的。
     - 第三个参数是速度，取大于等于1的数,越接近1速度越快。
