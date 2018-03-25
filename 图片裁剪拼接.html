@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>大尺寸广告图展示</title>
+    <style>
+        canvas {
+            /* border: 1px solid red; */
+        }
+        #ad2,#ad1 {
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="ad1" style="font-size:0px;overflow:hidden">
+        <!-- 请自行添加canvas元素 -->
+    </div>
+    <div id="ad2" style="font-size:0px;overflow:hidden"> </div>
+    <script>
+        function drawLargeImage($container, imageSrc) {
+            // 请补充方法体
+            var maxSize = 20000; //最大允许canvas值
+            var img = new Image();
+            img.src = imageSrc;
+            img.onload = function(){
+                var imgWidth = img.width;
+                var imgHeight = img.height;
+                /* 算出需要多少个maxSize面积的canvas，以及高度的零头 */
+                var canHeight = Math.floor(maxSize / imgWidth); //单位canvas的高度，向下取整，别超了。
+                var canNum = Math.floor(imgHeight / canHeight); //需要整的单位canvas的高度
+                /* 按照图片大小设置相框的大小 */
+                $container.style.width = imgWidth + 'px';
+                $container.style.height =imgHeight + 'px';
+
+                /*新建一个文档碎片，把canvas装在里面 */
+                var FrageCanvas = document.createDocumentFragment();
+                for (var n = 0; n <= canNum; n++) { //多画一个整的，多余的部分会被盖住，
+                    var canvas = document.createElement('canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.width = imgWidth;
+                    canvas.height = canHeight;
+                    context.drawImage(img, 0, n * canHeight, imgWidth, canHeight, 0, 0, imgWidth, canHeight);
+                    FrageCanvas.appendChild(canvas);
+                }
+                
+                $container.appendChild(FrageCanvas);
+                console.log(FrageCanvas);
+                console.log(canHeight, canNum,imgWidth,imgHeight);
+
+            }
+        }
+        drawLargeImage(document.getElementById('ad1'), 'https://gw.alicdn.com/tfs/TB163pKdMmTBuNjy1XbXXaMrVXa-400-400.jpg');
+        drawLargeImage(document.getElementById('ad2'), 'https://gw.alicdn.com/tfs/TB1EaOddKuSBuNjy1XcXXcYjFXa-500-700.jpg'); 
+    </script>
+</body>
+
+</html>
